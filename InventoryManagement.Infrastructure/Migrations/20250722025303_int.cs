@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace InventoryManagement.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class @int : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -90,6 +90,29 @@ namespace InventoryManagement.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StockTransactions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StockTransactions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StockTransactions_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PurchaseOrders",
                 columns: table => new
                 {
@@ -163,6 +186,11 @@ namespace InventoryManagement.Infrastructure.Migrations
                 name: "IX_PurchaseOrders_SupplierId",
                 table: "PurchaseOrders",
                 column: "SupplierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StockTransactions_ProductId",
+                table: "StockTransactions",
+                column: "ProductId");
         }
 
         /// <inheritdoc />
@@ -175,13 +203,16 @@ namespace InventoryManagement.Infrastructure.Migrations
                 name: "PurchaseOrderDetails");
 
             migrationBuilder.DropTable(
+                name: "StockTransactions");
+
+            migrationBuilder.DropTable(
                 name: "CustomerOrders");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "PurchaseOrders");
 
             migrationBuilder.DropTable(
-                name: "PurchaseOrders");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Suppliers");

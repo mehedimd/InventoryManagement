@@ -14,6 +14,7 @@ namespace InventoryManagement.Infrastructure.MyDbContext
         public DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
         public DbSet<CustomerOrder> CustomerOrders { get; set; }
         public DbSet<CustomerOrderDetail> CustomerOrderDetails { get; set; }
+        public DbSet<StockTransaction> StockTransactions { get; set; }
 
 
 

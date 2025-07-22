@@ -16,6 +16,9 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<ICustomerOrderService, CustomerOrderService>();
 
+// enable cors
+builder.Services.AddCors(option => option.AddPolicy("corsPolicy", policy => policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod()));
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -31,6 +34,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("corsPolicy");
 
 app.UseHttpsRedirection();
 
