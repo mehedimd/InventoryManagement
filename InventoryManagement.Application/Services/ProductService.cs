@@ -57,6 +57,24 @@ namespace InventoryManagement.Application.Services
             await _repo.SaveChangesAsync();
             return true;
         }
+
+        // report
+        public async Task<List<StockOverviewDto>> GetStockOverviewAsync()
+        {
+            var products = await _repo.GetAllAsync();
+
+            var overview = products.Select(p => new StockOverviewDto
+            {
+                ProductId = p.ProductId,
+                ProductName = p.ProductName,
+                StockQuantity = p.StockQuantity,
+                ReorderLevel = p.ReorderLevel,
+                StockStatus = p.StockQuantity <= p.ReorderLevel ? "Low" : "OK"
+            }).ToList();
+
+            return overview;
+        }
+
     }
 
 }

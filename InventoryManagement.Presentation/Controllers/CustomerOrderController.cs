@@ -29,8 +29,16 @@ namespace InventoryManagement.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CustomerOrderDto dto)
         {
-            var created = await _service.CreateAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id = created.CustomerOrderId }, created);
+            try
+            {
+                var created = await _service.CreateAsync(dto);
+                return CreatedAtAction(nameof(GetById), new { id = created.CustomerOrderId }, created);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpPut("{id}")]

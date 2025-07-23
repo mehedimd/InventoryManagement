@@ -4,6 +4,7 @@ namespace InventoryManagement.Application.Interfaces
 {
     public interface IProductService
     {
+        Task<List<StockOverviewDto>> GetStockOverviewAsync();
         Task<IEnumerable<ProductDto>> GetAllAsync();
         Task<ProductDto?> GetByIdAsync(int id);
         Task<ProductDto> CreateAsync(ProductDto dto);

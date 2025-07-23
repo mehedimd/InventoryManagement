@@ -32,7 +32,7 @@ namespace InventoryManagement.Application.Services
         public async Task<CustomerOrderDto> CreateAsync(CustomerOrderDto dto)
         {
             var order = _mapper.Map<CustomerOrder>(dto);
-            await _repo.Add(order);
+            await _repo.CreateOrderAsync(order);
             await _repo.SaveChangesAsync();
             return _mapper.Map<CustomerOrderDto>(order);
         }
@@ -59,5 +59,19 @@ namespace InventoryManagement.Application.Services
             await _repo.SaveChangesAsync();
             return true;
         }
+
+        // report
+        public async Task<List<TopSellingProductDto>> GetTopSellingProductsAsync(int topN)
+        {
+            var rawData = await _repo.GetTopSellingProductsAsync(topN);
+
+            return rawData.Select(x => new TopSellingProductDto
+            {
+                ProductId = x.ProductId,
+                ProductName = x.ProductName,
+                TotalQuantitySold = x.TotalQuantity
+            }).ToList();
+        }
+
     }
 }
