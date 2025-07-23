@@ -15,6 +15,8 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<ICustomerOrderService, CustomerOrderService>();
+builder.Services.AddScoped<IStockTransactionService, StockTransactionService>();
+
 
 // enable cors
 builder.Services.AddCors(option => option.AddPolicy("corsPolicy", policy => policy.WithOrigins("*").AllowAnyHeader().AllowAnyMethod()));

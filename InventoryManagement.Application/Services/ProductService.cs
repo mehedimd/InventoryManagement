@@ -32,9 +32,9 @@ namespace InventoryManagement.Application.Services
         public async Task<ProductDto> CreateAsync(ProductDto dto)
         {
             var product = _mapper.Map<Product>(dto);
-            await _repo.Add(product);
-            await _repo.SaveChangesAsync();
-            return _mapper.Map<ProductDto>(product);
+            var result = await _repo.CreateProductAsync(product);
+
+            return _mapper.Map<ProductDto>(result);
         }
 
         public async Task<bool> UpdateAsync(int id, ProductDto dto)

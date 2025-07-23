@@ -20,6 +20,7 @@ namespace InventoryManagement.Infrastructure.ServiceExtension
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<ICustomerOrderRepository, CustomerOrderRepository>();
+            services.AddScoped<IStockTransactionRepository, StockTransactionRepository>();
 
             return services;
         }
